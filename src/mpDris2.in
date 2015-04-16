@@ -575,6 +575,11 @@ class MPDWrapper(object):
                     self._temp_cover.write(song.tags['APIC:'].data)
                     self._temp_cover.flush()
                     return 'file://' + self._temp_cover.name
+                elif 'covr' in song.tags:
+                    self._temp_cover = tempfile.NamedTemporaryFile(suffix='.jpg')
+                    self._temp_cover.write(song.tags['covr'][0])
+                    self._temp_cover.flush()
+                    return 'file://' + self._temp_cover.name
 
             # Look in song directory for common album cover files
             if os.path.exists(song_dir):
